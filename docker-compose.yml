@@ -1,0 +1,34 @@
+version: '2'
+services:
+  angular:
+    build: angular-client
+    container_name: angular-frontend
+    networks:
+      - frontend
+    ports:
+      - "8080:80"
+
+  express:
+    build: express-server
+    container_name: express-api
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "3000:3000"
+
+  database:
+    build: mysql-database
+    container_name: mysql-bd
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+    networks:
+      - backend
+    ports:
+      - "3306:3306"
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
